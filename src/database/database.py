@@ -1,11 +1,16 @@
 import pymysql
 
-from src.utils.config import DATABASE, HOST_DB, PASSWORD, USERNAME
+from src.utils.config import DATABASE, HOST_DB, PASSWORD, DB_PORT, USERNAME
 
 
 class DataBase:
     def __init__(
-        self, host=HOST_DB, username=USERNAME, password=PASSWORD, database=DATABASE
+        self,
+        host=HOST_DB,
+        username=USERNAME,
+        password=PASSWORD,
+        database=DATABASE,
+        port=DB_PORT,
     ):
         try:
             # Initial connection to check databases
@@ -13,6 +18,7 @@ class DataBase:
                 host=host,
                 user=username,
                 password=password,
+                port=port,
             )
             self.my_cursor = self.connection.cursor()
 
@@ -72,7 +78,6 @@ class DataBase:
 
     def select_all(self, sql: str):
         try:
-
             self.my_cursor.execute(sql)
             return self.my_cursor.fetchall()
         except pymysql.MySQLError as e:
