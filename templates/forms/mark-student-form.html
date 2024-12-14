@@ -1,0 +1,255 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Marks</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Add New Mark</h2>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+                                        <div class="card-body">
+                                            <div class="nav-wrapper p-0">
+                                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 active show mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-newspaper mr-2"></i>First Term</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="far fa-newspaper mr-2"></i>Second Term</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <form class="validate-form" action="/add_marks" method="post" enctype="multipart/form-data">
+                                            <div class="card-body pb-0">
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                {% if "first_term" in data.keys():%}
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Participation</label>
+                                                                        <input type="hidden" class="form-control" name="term_id" value="{{data['terms'][0]['id']}}" >
+                                                                        <input type="hidden" class="form-control" name="id" value="{{data['first_term']['id']}}" >
+                                                                        <input type="hidden" class="form-control" name="term_type" value="first" >
+                                                                        {%if data['terms'][0]['term_id'] == "b6e69840-dc60-45ae-9fd1-04b3f1fc5649"%}
+                                                                            <input type="hidden" class="form-control" name="mark_term_id" value="{{data['first_term']['mark_term_id']}}">
+                                                                        {%else%}
+                                                                            <input type="hidden" class="form-control" name="mark_term_id" value="" placeholder="Participation">
+                                                                        {%endif%}
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="participation" value="{{data['first_term']['participation']}}">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="participation" placeholder="Participation">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Home Work</label>
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="home_work" value="{{data['first_term']['home_work']}}" placeholder="Home Work">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="home_work" placeholder="Home Work">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Class Work</label>
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="class_work" value="{{data['first_term']['class_work']}}" placeholder="Class Work">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="class_work" placeholder="Class Work">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Quiz</label>
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="quiz" value="{{data['first_term']['quiz']}}" placeholder="Quiz">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="quiz" placeholder="Quiz">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Mid Term</label>
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="mid_term" value="{{data['first_term']['mid_term']}}" placeholder="Mid Term">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="mid_term" placeholder="Mid Term">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Final</label>
+                                                                        {% if "first_term" in data.keys() and data['first_term'] != {}:%}
+                                                                            <input type="text" class="form-control" name="final" value="{{data['first_term']['final']}}" placeholder="Final">
+                                                                        {%else%}
+                                                                            <input type="text" class="form-control" name="final" placeholder="Final">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Student</label>
+                                                                        <input type="text" class="form-control" name="student_name" value="{{data['student']['first_name']}} {{data['student']['last_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="student_id" value="{{data['student']['id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Teacher</label>
+                                                                        <input type="text" class="form-control" name="teacher_name" value="{{data['subject']['teacher_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="teacher_id" value="{{data['subject']['teacher_id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Class</label>
+                                                                        <input type="text" class="form-control" name="class_name" value="{{data['subject']['class_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="class_id" value="{{data['subject']['class_id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Subject</label>
+                                                                        <input type="text" class="form-control" name="subject_name" value="{{data['subject']['name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="subject_id" value="{{data['subject']['id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <input type="submit" value="Add Mark" class="form-control btn btn-primary" />
+                                                                </div>
+                                                                {%endif%}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                {%if "second_term" in data.keys():%}
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Participation</label>
+                                                                        <input type="hidden" class="form-control" name="term_id_second_term" value="{{data['terms'][1]['id']}}">
+                                                                        <input type="hidden" class="form-control" name="id_second_term" value="{{data['second_term']['id']}}" >
+                                                                        <input type="hidden" class="form-control" name="term_type_second_term" value="second">
+                                                                        {%if data['terms'][1]['id'] == "b6e69840-dc60-45ae-9fd1-04b3f1fc5149"%}
+                                                                            <input type="hidden" class="form-control" name="mark_term_id_second_term" value="{{data['second_term']['mark_term_id']}}">
+                                                                        {%else%}
+                                                                            <input type="hidden" class="form-control" name="mark_term_id_second_term" value="">
+                                                                        {%endif%}
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="participation_second_term" value="{{data['second_term']['participation']}}">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="participation_second_term" placeholder="Participation">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Home Work</label>
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="home_work_second_term" value="{{data['second_term']['home_work']}}" placeholder="Home Work">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="home_work_second_term" placeholder="Home Work">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Class Work</label>
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="class_work_second_term" value="{{data['second_term']['class_work']}}" placeholder="Class Work">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="class_work_second_term" placeholder="Class Work">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Quiz</label>
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="quiz_second_term" value="{{data['second_term']['quiz']}}" placeholder="Quiz">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="quiz_second_term" placeholder="Quiz">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Mid Term</label>
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="number" class="form-control" name="mid_term_second_term" value="{{data['second_term']['mid_term']}}" placeholder="Mid Term">
+                                                                        {%else%}
+                                                                            <input type="number" class="form-control" name="mid_term_second_term" placeholder="Mid Term">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Final</label>
+                                                                        {% if "second_term" in data.keys() and data['second_term'] != {}:%}
+                                                                            <input type="text" class="form-control" name="final_second_term" value="{{data['second_term']['final']}}" placeholder="Final">
+                                                                        {%else%}
+                                                                            <input type="text" class="form-control" name="final_second_term" placeholder="Final">
+                                                                        {%endif%}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Student</label>
+                                                                        <input type="text" class="form-control" name="student_name" value="{{data['student']['first_name']}} {{data['student']['last_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="student_id" value="{{data['student']['id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Teacher</label>
+                                                                        <input type="text" class="form-control" name="teacher_name" value="{{data['subject']['teacher_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="teacher_id" value="{{data['subject']['teacher_id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Class</label>
+                                                                        <input type="text" class="form-control" name="class_name" value="{{data['subject']['class_name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="class_id" value="{{data['subject']['class_id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Subject</label>
+                                                                        <input type="text" class="form-control" name="subject_name" value="{{data['subject']['name']}}" disabled>
+                                                                        <input type="hidden" class="form-control" name="subject_id" value="{{data['subject']['id']}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <input type="submit" value="Add Mark" class="form-control btn btn-primary" />
+                                                                </div>
+                                                                {%endif%}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+                        </div>
+
+{% include 'footer.html'%}

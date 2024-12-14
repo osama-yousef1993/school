@@ -1,0 +1,86 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Marks</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Add New Mark</h2>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+                                        <form class="validate-form" action="/add_marks" method="post" enctype="multipart/form-data">
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Participation</label>
+                                                            <input type="number" class="form-control" name="participation" placeholder="Participation">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Home Work</label>
+                                                            <input type="number" class="form-control" name="home_work" placeholder="Home Work">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Class Work</label>
+                                                            <input type="number" class="form-control" name="class_work" placeholder="Class Work">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Quiz</label>
+                                                            <input type="number" class="form-control" name="quiz" placeholder="Quiz">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Mid Term</label>
+                                                            <input type="number" class="form-control" name="mid_term" placeholder="Mid Term">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Final</label>
+                                                            <input type="text" class="form-control" name="final" placeholder="Final">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="form-label">Teacher</label>
+                                                        <select name="teacher" id="select-teachers" class="form-control custom-select">
+                                                            <option value="">Select Teacher</option>
+                                                            {%for teacher in data['teachers']:%}
+                                                                <option value="{{teacher['id']}}">{{teacher['teacher_name']}}</option>
+                                                            {%endfor%}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="form-label">Student</label>
+                                                        <select name="student" id="select-students" class="form-control custom-select">
+                                                            <option value="">Select Student</option>
+                                                            {%for student in data['students']:%}
+                                                                <option value="{{student['id']}}">{{student['first_name']}} {{student['last_name']}}</option>
+                                                            {%endfor%}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="submit" value="Add Mark" class="form-control btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+
+{% include 'footer.html'%}

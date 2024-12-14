@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+	<meta name="author" content="Creative Tim">
+
+	<!-- Title -->
+	<title>Ansta - Responsive Multipurpose Admin Dashboard Template</title>
+
+	<!-- Favicon -->
+	<link href="../static/assets/img/brand/favicon.png" rel="icon" type="image/png">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
+
+	<!-- Icons -->
+	<link href="../static/assets/css/icons.css" rel="stylesheet">
+
+	<!--Bootstrap.min css-->
+	<link rel="stylesheet" href="../static/assets/plugins/bootstrap/css/bootstrap.min.css">
+
+	<!-- Ansta CSS -->
+	<link href="../static/assets/css/dashboard.css" rel="stylesheet" type="text/css">
+
+	<!-- Single-page CSS -->
+	<link href="../static/assets/plugins/single-page/css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="bg-gradient-primary">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-5">
+
+				<form class="login100-form validate-form" action="/sign_up" method="post" enctype="multipart/form-data">
+					<span class="login100-form-title">
+						Member Register
+					</span>
+					<h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+					<h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+					<div class="form-group">
+						<label class="form-label">First Name</label>
+						<input type="text" class="form-control" name="first_name" placeholder="First Name">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Last Last</label>
+						<input type="text" class="form-control" name="last_name" placeholder="Last Last">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Email</label>
+						<input type="text" class="form-control" name="email" placeholder="Email">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Password</label>
+						<input type="password" class="form-control" name="pass" placeholder="*****">
+					</div>
+					<div class="container-login100-form-btn">
+						<input type="submit" value="Sign Up" class="login100-form-btn btn-primary" />
+					</div>
+
+					<div class="text-center pt-1">
+						<a class="txt2" href="register.html">
+							Have an account?
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Ansta Scripts -->
+	<!-- Core -->
+	<script src="../static/assets/plugins/jquery/dist/jquery.min.js"></script>
+	<script src="../static/assets/js/popper.js"></script>
+	<script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

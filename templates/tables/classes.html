@@ -1,0 +1,50 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Tables</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Classes</li>
+								</ol>
+                                <a href="/classes-form" class="btn btn-primary  mb-0"><i class="fe fe-plus mr-2"></i>Add New Class</a>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Classes Table</h2>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+										<div class="card-body">
+											<div class="table-responsive">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+													<thead>
+														<tr>
+															<th class="wd-15p">Class Name</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for class in data['classes']%}
+															<tr>
+																<td>{{class['name']}}  <a href="/subjects-table/{{class['id']}}" class="mb-0"><i class="fe fe-plus mr-2"></i></a></td>
+															</tr>
+															<script>
+																function delete_me(id_student)
+																{
+																 	if(confirm("Are You Want to delete Student")){
+																 		window.location.href='/delete_student/' + id_student +'';
+																 		return true;
+																 	}
+																}
+															</script>
+														{%endfor%}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+{% include 'footer.html'%}

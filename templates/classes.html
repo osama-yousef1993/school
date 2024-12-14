@@ -1,0 +1,38 @@
+{%include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Apps</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Widgets</li>
+								</ol>
+							</div>
+							<div class="row">
+								{% set color  =  ['bg-gradient-warning', 'bg-gradient-danger', 'bg-gradient-primary'] %}
+								{%for class in data['classes']: %}
+								{% set rand = [0, 1, 2] | random %}
+								<div class="col-xl-4 col-lg-4">
+									<a href="/subjects-table/{{class['id']}}" style="text-decoration: none;">
+										<div class="card pull-up shadow {{color[rand]}}">
+											<div class="card-content">
+												<div class="card-body">
+													<img src="../static/assets/img/circle.svg" class="card-img-absolute" alt="circle-image">
+													<div class="media d-flex">
+														<div class="media-body text-left">
+															<h2 class="text-white mb-0">{{class['name']}}</h2>
+														</div>
+														<div class="align-self-center">
+															<i class="fe fe-file-text text-white font-large-2 float-right"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								
+								{%endfor%}
+							</div>
+
+
+{%include 'footer.html'%}

@@ -1,0 +1,62 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Teacher</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Add New Teacher</h2>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+                                        <form class="validate-form" action="/add_teacher" method="post" enctype="multipart/form-data">
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">First Name</label>
+                                                            <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Last Name</label>
+                                                            <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Email</label>
+                                                            <input type="email" class="form-control" name="email" placeholder="Email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Password</label>
+                                                            <input type="password" class="form-control" name="pass" placeholder="Password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Teacher ID</label>
+                                                            <input type="text" class="form-control" name="teacher_id" placeholder="Teacher ID">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="submit" value="Add Teacher" class="form-control btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+
+{% include 'footer.html'%}

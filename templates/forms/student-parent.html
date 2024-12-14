@@ -1,0 +1,50 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Student To Parent</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Add Student To Parent</h2>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+                                        <form class="validate-form" action="/add_student_parent" method="post" enctype="multipart/form-data">
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <label class="form-label">Student</label>
+                                                        <select name="student" id="select-teachers" class="form-control custom-select">
+                                                            <option value="">Select Student</option>
+                                                            {%for student in data['students']:%}
+                                                                <option value="{{student['id']}}">{{student['first_name']}} {{student['last_name']}}</option>
+                                                            {%endfor%}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="form-label">Parent</label>
+                                                        <select name="parent" id="select-teachers" class="form-control custom-select">
+                                                            <option value="">Select Parent</option>
+                                                            {%for parent in data['parents']:%}
+                                                                <option value="{{parent['id']}}">{{parent['parent_name']}}</option>
+                                                            {%endfor%}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="submit" value="Add Student To Parent" class="form-control btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+
+{% include 'footer.html'%}

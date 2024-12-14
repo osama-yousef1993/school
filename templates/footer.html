@@ -1,0 +1,92 @@
+<!-- Footer -->
+<div class="d-print-none">
+    <div class="float-right">
+        <a href="javascript:window.print()" class="btn btn-primary"><i class="fa fa-print"></i> print</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<footer class="footer">
+    <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+</div>
+</div>
+</div>
+</div>
+<!-- app-content-->
+</div>
+</div>
+<!-- Back to top -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- Ansta Scripts -->
+<!-- Core -->
+<script src="../static/assets/plugins/jquery/dist/jquery.min.js"></script>
+<script src="../static/assets/js/popper.js"></script>
+<script src="../static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Optional JS -->
+<script src="../static/assets/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="../static/assets/plugins/chart.js/dist/Chart.extension.js"></script>
+
+
+<!-- Data tables -->
+<script src="../static/assets/plugins/datatable/jquery.dataTables.min.js"></script>
+<script src="../static/assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+<!-- Echarts JS -->
+<script src="../static/assets/plugins/chart-echarts/echarts.js"></script>
+
+<!-- Fullside-menu Js-->
+<script src="../static/assets/plugins/toggle-sidebar/js/sidemenu.js"></script>
+
+<!-- Custom scroll bar Js-->
+<script src="../static/assets/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!-- peitychart -->
+<script src="../static/assets/plugins/peitychart/jquery.peity.min.js"></script>
+<script src="../static/assets/plugins/peitychart/peitychart.init.js"></script>
+
+<!-- Vector Plugin -->
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="../static/assets/plugins/jvectormap/gdp-data.js"></script>
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-uk-mill-en.js"></script>
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-au-mill.js"></script>
+<script src="../static/assets/plugins/jvectormap/jquery-jvectormap-ca-lcc.js"></script>
+<script src="../static/assets/js/dashboard2map.js"></script>
+
+<!-- Ansta JS -->
+<script src="../static/assets/js/custom.js"></script>
+<script src="../static/assets/js/dashboard-sales.js"></script>
+<script>
+    $(function(e) {
+        $('#example').DataTable();
+
+        var table = $('#example1').DataTable();
+        $('button').click( function() {
+            var data = table.$('input, select').serialize();
+            alert(
+                "The following data would have been submitted to the server: \n\n"+
+                data.substr( 0, 120 )+'...'
+            );
+            return false;
+        });
+        $('#example2').DataTable( {
+            "scrollY":        "200px",
+            "scrollCollapse": true,
+            "paging":         false
+        });
+    } );
+
+</script>
+
+</body>
+
+</html>

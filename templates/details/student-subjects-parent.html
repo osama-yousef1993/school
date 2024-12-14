@@ -1,0 +1,57 @@
+{% include 'header.html'%}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Tables</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Student Data</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Student Data Table</h2>
+											<h5 class="mb-0">CLass Name: {{data['student_parent']['class_name']}}</h5>
+											<h5 class="mb-0">Subject Name: {{data['student_parent']['subject_name']}}</h5>
+											<h5 class="mb-0">Student Name: {{data['student_parent']['teacher_name']}}</h5>
+                                            <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
+                                            <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
+										</div>
+										<div class="card-body">
+											<div class="table-responsive">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+													<thead>
+														<tr>
+															<th class="wd-15p">Participation</th>
+															<th class="wd-15p">Home Work</th>
+															<th class="wd-20p">Class Work</th>
+															<th class="wd-20p">Quiz</th>
+                                                            <th class="wd-10p">Mid Term</th>
+															<th class="wd-20p">Final</th>
+															<th class="wd-20p">Student Id</th>
+															<th class="wd-20p">Student Name</th>
+														</tr>
+													</thead>
+													<tbody>
+                                                        {% for student in data['student_parent']%}
+                                                        <tr>
+                                                            <td>{{data['mark']['participation']}}</td>
+                                                            <td>{{data['mark']['home_work']}}</td>
+                                                            <td>{{data['mark']['class_work']}}</td>
+                                                            <td>{{data['mark']['quiz']}}</td>
+                                                            <td>{{data['mark']['mid_term']}}</td>
+                                                            <td>{{data['mark']['final']}}</td>
+                                                            <td>{{data['mark']['student_id']}}</td>
+                                                            <td>{{data['mark']['student_name']}}</td>
+                                                        </tr>
+                                                        {%endfor%}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+{% include 'footer.html'%}
