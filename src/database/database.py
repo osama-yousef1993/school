@@ -1,6 +1,6 @@
 import pymysql
 
-from src.utils.config import DATABASE, HOST_DB, PASSWORD, DB_PORT, USERNAME
+from src.utils.config import DATABASE, DB_PORT, HOST_DB, PASSWORD, USERNAME
 
 
 class DataBase:
@@ -10,7 +10,7 @@ class DataBase:
         username=USERNAME,
         password=PASSWORD,
         database=DATABASE,
-        port=DB_PORT,
+        port=int(DB_PORT),
     ):
         try:
             # Initial connection to check databases
