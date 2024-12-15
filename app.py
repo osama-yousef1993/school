@@ -11,7 +11,6 @@ from src.controllers.students import Student
 from src.controllers.subjects import Subject
 from src.controllers.teacher import Teacher
 from src.controllers.terms import Term
-from src.utils.config import DEBUG, HOST_APP, PORT
 
 app = Flask(__name__)
 
@@ -956,4 +955,4 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=DEBUG, port=PORT, host=HOST_APP)
+    app.run(debug=True)

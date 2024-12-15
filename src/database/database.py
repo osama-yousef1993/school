@@ -1,3 +1,4 @@
+import mysql.connector
 import pymysql
 
 from src.utils.config import DATABASE, DB_PORT, HOST_DB, PASSWORD, USERNAME
@@ -14,7 +15,7 @@ class DataBase:
     ):
         try:
             # Initial connection to check databases
-            self.connection = pymysql.connect(
+            self.connection = mysql.connector.connect(
                 host=host,
                 user=username,
                 password=password,
@@ -28,7 +29,7 @@ class DataBase:
 
                 if database in databases:
                     # Reconnect to the specified database
-                    self.connection = pymysql.connect(
+                    self.connection = mysql.connector.connect(
                         host=host,
                         user=username,
                         password=password,
