@@ -295,6 +295,18 @@ class StudentModel:
         else:
             return True
 
+    def check_student_subject_exists(
+        self, column: str, value, column1: str, value1, column2: str, value2
+    ) -> bool:
+        sql = """SELECT count(*) FROM student_subjects WHERE {} ='{}' and {} = '{}' and {} = '{}' ;""".format(
+            column, value, column1, value1, column2, value2
+        )
+        data = self.con.select_one(sql)
+        if data is None or data[0] == 0:
+            return False
+        else:
+            return True
+
     def add_student(self, **info) -> bool:
         try:
             data = dict()
@@ -306,6 +318,23 @@ class StudentModel:
                 return False, "Student already exists Please enter a new Student Id"
 
             self.con.insert_data("student", **info)
+            return True, "Data Inserted Successfully!"
+
+        except:  # noqa: E722
+            return False, "A system error occurred, please try again later"
+
+    def add_student_to_subject(self, **info) -> bool:
+        try:
+            if self.check_student_subject_exists(
+                "student_id",
+                info["student_id"],
+                "subject_id",
+                info["subject_id"],
+                "class_id",
+                info["class_id"],
+            ):
+                return False, "Student already Added to this Subject"
+            self.con.insert_data("student_subjects", **info)
             return True, "Data Inserted Successfully!"
 
         except:  # noqa: E722
@@ -342,27 +371,54 @@ class StudentModel:
                     s.last_name,
                     s.student_id,
                     s.class_id,
-                    cl.name as class_name,
+                    c.class_name,
                     t.teacher_id,
-                    concat(t.first_name, ' ', t.last_name) as teacher_name,
-                    su.id as subject_id,
-                    su.name as subject_name
+                    t.teacher_name,
+                    su.subject_id,
+                    su.subject_name
                 FROM
-                    Student s
+                    (SELECT
+                        id,
+                        first_name,
+                        last_name,
+                        student_id,
+                        teacher_id,
+                        class_id,
+                        subject_id,
+                        parent_id
+                    FROM Student
+                    WHERE parent_id = '{id}') s
                 LEFT JOIN
-                    Class cl
-                    ON s.class_id = cl.id
+                    (SELECT
+                        id,
+                        name AS class_name
+                    FROM class) c
+                ON s.class_id = c.id
                 LEFT JOIN
-                    Teacher t
-                    ON s.teacher_id = t.id
+                    (SELECT
+                        id,
+                        CONCAT(first_name, ' ', last_name) AS teacher_name,
+                        teacher_id
+                    FROM teacher) t
+                ON s.teacher_id = t.id
                 LEFT JOIN
-                    student_subjects ss
-                    ON s.id = ss.student_id
+                (SELECT
+                    id as subject_id,
+                    name as subject_name,
+                    class_id
+                FROM subject) su
+                ON su.class_id = s.class_id
+
                 LEFT JOIN
-                    subject su
-                    ON ss.subject_id = su.id
-                WHERE
-                    s.parent_id = '{id}';
+                (SELECT
+                    id,
+                    subject_id,
+                    student_id,
+                    class_id
+                FROM student_subjects) ss
+                ON s.id = ss.student_id
+                AND su.subject_id = ss.subject_id
+                AND c.id = ss.class_id
                 """
 
         students = self.con.select_all(sql)
@@ -380,4 +436,64 @@ class StudentModel:
             data["subject_id"] = student[8]
             data["subject_name"] = student[9]
             result.append(data)
+        return result
+
+    def calculate_gpa(self, class_id, student_id):
+        sql = f"""SELECT
+                    s.id,
+                    s.participation,
+                    s.home_work,
+                    s.class_work,
+                    s.quiz,
+                    s.mid_term,
+                    s.final,
+                    t.term_id,
+                    t.term_name
+                FROM
+                    (SELECT
+                        id,
+                        participation,
+                        home_work,
+                        class_work,
+                        quiz,
+                        mid_term,
+                        final,
+                        teacher_id,
+                        student_id,
+                        subject_id,
+                        class_id
+                    FROM marks
+                    WHERE student_id = '{student_id}'
+                    AND class_id ='{class_id}') s
+                LEFT JOIN
+                (SELECT
+                        id,
+                        term_id,
+                        mark_id
+                    FROM term_marks) mt
+                ON s.id = mt.mark_id
+                LEFT JOIN
+                    (SELECT distinct
+                        id as term_id,
+                        name as term_name
+                    FROM terms) t
+                ON mt.term_id = t.term_id
+                ;"""
+
+        students = self.con.select_all(sql)
+        result = list()
+        for student in students:
+            data = dict()
+            if student:
+                data["id"] = student[0]
+                data["participation"] = student[1]
+                data["home_work"] = student[2]
+                data["class_work"] = student[3]
+                data["quiz"] = student[4]
+                data["mid_term"] = student[5]
+                data["final"] = student[6]
+                data["term_id"] = student[7]
+                data["term_name"] = student[8]
+                result.append(data)
+
         return result

@@ -40,15 +40,15 @@
                                                                         <input type="hidden" class="form-control" name="term_id" value="{{data['terms'][0]['id']}}" >
                                                                         <input type="hidden" class="form-control" name="id" value="{{data['first_term']['id']}}" >
                                                                         <input type="hidden" class="form-control" name="term_type" value="first" >
-                                                                        {%if data['terms'][0]['term_id'] == "b6e69840-dc60-45ae-9fd1-04b3f1fc5649"%}
+                                                                        {%if data['terms'][0]['id'] == "b6e69840-dc60-45ae-9fd1-04b3f1fc5649"%}
                                                                             <input type="hidden" class="form-control" name="mark_term_id" value="{{data['first_term']['mark_term_id']}}">
                                                                         {%else%}
                                                                             <input type="hidden" class="form-control" name="mark_term_id" value="" placeholder="Participation">
                                                                         {%endif%}
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="participation" value="{{data['first_term']['participation']}}">
+                                                                            <input type="number" class="form-control" name="participation" value="{{data['first_term']['participation']}}" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="participation" placeholder="Participation">
+                                                                            <input type="number" class="form-control" name="participation" placeholder="Participation" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -56,9 +56,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Home Work</label>
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="home_work" value="{{data['first_term']['home_work']}}" placeholder="Home Work">
+                                                                            <input type="number" class="form-control" name="home_work" value="{{data['first_term']['home_work']}}" placeholder="Home Work" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="home_work" placeholder="Home Work">
+                                                                            <input type="number" class="form-control" name="home_work" placeholder="Home Work" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -66,9 +66,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Class Work</label>
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="class_work" value="{{data['first_term']['class_work']}}" placeholder="Class Work">
+                                                                            <input type="number" class="form-control" name="class_work" value="{{data['first_term']['class_work']}}" placeholder="Class Work" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="class_work" placeholder="Class Work">
+                                                                            <input type="number" class="form-control" name="class_work" placeholder="Class Work" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -76,9 +76,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Quiz</label>
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="quiz" value="{{data['first_term']['quiz']}}" placeholder="Quiz">
+                                                                            <input type="number" class="form-control" name="quiz" value="{{data['first_term']['quiz']}}" placeholder="Quiz" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="quiz" placeholder="Quiz">
+                                                                            <input type="number" class="form-control" name="quiz" placeholder="Quiz" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -86,9 +86,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Mid Term</label>
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="mid_term" value="{{data['first_term']['mid_term']}}" placeholder="Mid Term">
+                                                                            <input type="number" class="form-control" name="mid_term" value="{{data['first_term']['mid_term']}}" placeholder="Mid Term" max="20" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="mid_term" placeholder="Mid Term">
+                                                                            <input type="number" class="form-control" name="mid_term" placeholder="Mid Term" max="20" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -96,9 +96,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Final</label>
                                                                         {% if "first_term" in data.keys() and data['first_term'] != {}:%}
-                                                                            <input type="text" class="form-control" name="final" value="{{data['first_term']['final']}}" placeholder="Final">
+                                                                            <input type="number" class="form-control" name="final" value="{{data['first_term']['final']}}" placeholder="Final" max="40" min="0">
                                                                         {%else%}
-                                                                            <input type="text" class="form-control" name="final" placeholder="Final">
+                                                                            <input type="number" class="form-control" name="final" placeholder="Final" max="40" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -153,9 +153,9 @@
                                                                             <input type="hidden" class="form-control" name="mark_term_id_second_term" value="">
                                                                         {%endif%}
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="participation_second_term" value="{{data['second_term']['participation']}}">
+                                                                            <input type="number" class="form-control" name="participation_second_term" value="{{data['second_term']['participation']}}" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="participation_second_term" placeholder="Participation">
+                                                                            <input type="number" class="form-control" name="participation_second_term" placeholder="Participation" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -163,9 +163,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Home Work</label>
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="home_work_second_term" value="{{data['second_term']['home_work']}}" placeholder="Home Work">
+                                                                            <input type="number" class="form-control" name="home_work_second_term" value="{{data['second_term']['home_work']}}" placeholder="Home Work" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="home_work_second_term" placeholder="Home Work">
+                                                                            <input type="number" class="form-control" name="home_work_second_term" placeholder="Home Work" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -173,9 +173,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Class Work</label>
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="class_work_second_term" value="{{data['second_term']['class_work']}}" placeholder="Class Work">
+                                                                            <input type="number" class="form-control" name="class_work_second_term" value="{{data['second_term']['class_work']}}" placeholder="Class Work" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="class_work_second_term" placeholder="Class Work">
+                                                                            <input type="number" class="form-control" name="class_work_second_term" placeholder="Class Work" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -183,9 +183,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Quiz</label>
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="quiz_second_term" value="{{data['second_term']['quiz']}}" placeholder="Quiz">
+                                                                            <input type="number" class="form-control" name="quiz_second_term" value="{{data['second_term']['quiz']}}" placeholder="Quiz" max="10" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="quiz_second_term" placeholder="Quiz">
+                                                                            <input type="number" class="form-control" name="quiz_second_term" placeholder="Quiz" max="10" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -193,9 +193,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Mid Term</label>
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="number" class="form-control" name="mid_term_second_term" value="{{data['second_term']['mid_term']}}" placeholder="Mid Term">
+                                                                            <input type="number" class="form-control" name="mid_term_second_term" value="{{data['second_term']['mid_term']}}" placeholder="Mid Term" max="20" min="0">
                                                                         {%else%}
-                                                                            <input type="number" class="form-control" name="mid_term_second_term" placeholder="Mid Term">
+                                                                            <input type="number" class="form-control" name="mid_term_second_term" placeholder="Mid Term" max="20" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>
@@ -203,9 +203,9 @@
                                                                     <div class="form-group">
                                                                         <label class="form-label">Final</label>
                                                                         {% if "second_term" in data.keys() and data['second_term'] != {}:%}
-                                                                            <input type="text" class="form-control" name="final_second_term" value="{{data['second_term']['final']}}" placeholder="Final">
+                                                                            <input type="number" class="form-control" name="final_second_term" value="{{data['second_term']['final']}}" placeholder="Final" max="40" min="0">
                                                                         {%else%}
-                                                                            <input type="text" class="form-control" name="final_second_term" placeholder="Final">
+                                                                            <input type="number" class="form-control" name="final_second_term" placeholder="Final" max="40" min="0">
                                                                         {%endif%}
                                                                     </div>
                                                                 </div>

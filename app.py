@@ -31,9 +31,6 @@ def home_page():
         return redirect(url_for("login"))
     user_data = Users()
     user_data.get_info_user_by_Id(session["Id_User"])
-    # if user_data.data["User"]["type"] == "teacher":
-    #     teacher_data.get_teacher(session["Id_User"])
-    #     user_data.data["User"] = teacher_data.data["teacher"]
     if user_data.data["User"]["type"] == "Admin":
         classes_result = Classes()
         classes_result.get_all_classes()
@@ -104,14 +101,18 @@ def student_parent_table(parent_id):
     user_data.get_info_user_by_Id(session["Id_User"])
     student_data = Student()
     student_data.get_student_by_parent_id(parent_id)
+    class_res = Classes()
+    class_res.get_all_classes()
     if user_data.data["User"]["type"] == "Admin":
         if len(student_data.data["student_parent"]) == 0:
             session["student_error"] = "there is no Child for this Parent"
             return redirect(url_for("parents_table_page"))
         student_data.data["User"] = user_data.data["User"]
+        student_data.data["classes"] = class_res.data["classes"]
         return render_template("tables/student_parent.html", data=student_data.data)
     elif user_data.data["User"]["type"] == "parent":
         student_data.data["User"] = user_data.data["User"]
+        student_data.data["classes"] = class_res.data["classes"]
         return render_template("tables/student_parent.html", data=student_data.data)
 
 
@@ -274,11 +275,14 @@ def student_form_page():
     teacher_class.get_all_teachers()
     subject_class = Subject()
     subject_class.get_all_subjects()
+    student_class = Student()
+    student_class.get_all_students()
     user_data = Users()
     user_data.get_info_user_by_Id(session["Id_User"])
     teacher_class.data["User"] = user_data.data["User"]
     teacher_class.data["subjects"] = subject_class.data["student_subjects"]
     teacher_class.data["classes"] = classes_res.data["classes"]
+    teacher_class.data["students"] = student_class.data["students"]
     return render_template("forms/students.html", data=teacher_class.data)
 
 
@@ -297,6 +301,56 @@ def add_student():
         res = request.form["subject"].split(",")
         data["subject_id"] = res[0]
         status = student_res.add_student(**data)
+        if status[0]:
+            session["successfully_add_student"] = status[1]
+            return redirect(url_for("students_table_page"))
+        elif not status[0]:
+            session["add_student_error"] = status[1]
+            return redirect(url_for("students_table_page"))
+    else:
+        return redirect(url_for("student_form_page"))
+
+
+@app.route("/calculate_gpa", methods=["POST"])
+def calculate_gpa():
+    if "Id_User" not in session:
+        return redirect(url_for("login"))
+    data = dict()
+    if request.method == "POST":
+        data["class_id"] = request.form["class"]
+        data["student_id"] = request.form["student"]
+        ids = ",".join([data["class_id"], data["student_id"]])
+        return redirect(url_for("gpa", ids=ids))
+    else:
+        return redirect(url_for("student_parent_table", parent_id=session["Id_User"]))
+
+
+@app.route("/gpa/<ids>")
+def gpa(ids):
+    if "Id_User" not in session:
+        return redirect(url_for("login"))
+    user_data = Users()
+    user_data.get_info_user_by_Id(session["Id_User"])
+    class_id = ids.split(",")[0]
+    student_id = ids.split(",")[1]
+    student_class = Student()
+    student_class.calculate_gpa(class_id, student_id)
+    user_data.data["first_term_gpa"] = student_class.data["first_term_gpa"]
+    user_data.data["second_term_gpa"] = student_class.data["second_term_gpa"]
+    user_data.data["total_gpa"] = student_class.data["total_gpa"]
+    return render_template("tables/gpa_table.html", data=user_data.data)
+
+
+@app.route("/add_student_subject", methods=["POST"])
+def add_student_subject():
+    data = dict()
+    student_res = Student()
+    if request.method == "POST":
+        data["id"] = str(uuid4())
+        data["subject_id"] = request.form["subject"].split(",")[0]
+        data["student_id"] = request.form["student"]
+        data["class_id"] = request.form["class"]
+        status = student_res.add_student_to_subject(**data)
         if status[0]:
             session["successfully_add_student"] = status[1]
             return redirect(url_for("students_table_page"))
@@ -444,7 +498,17 @@ def add_mark():
             data["teacher_id"] = request.form["teacher_id"]
             data["terms_id"] = request.form["term_id"]
             data["mark_term_id"] = request.form["mark_term_id"]
-            inserted_data.append(data)
+            if any(
+                [
+                    data["participation"] != 0,
+                    data["home_work"] != 0,
+                    data["class_work"] != 0,
+                    data["quiz"] != 0,
+                    data["mid_term"] != 0,
+                    data["final"] != 0,
+                ]
+            ):
+                inserted_data.append(data)
         if type_second_term == "second":
             data = dict()
             data["id"] = (
@@ -488,7 +552,17 @@ def add_mark():
             data["teacher_id"] = request.form["teacher_id"]
             data["terms_id"] = request.form["term_id_second_term"]
             data["mark_term_id"] = request.form["mark_term_id_second_term"]
-            inserted_data.append(data)
+            if any(
+                [
+                    data["participation"] != 0,
+                    data["home_work"] != 0,
+                    data["class_work"] != 0,
+                    data["quiz"] != 0,
+                    data["mid_term"] != 0,
+                    data["final"] != 0,
+                ]
+            ):
+                inserted_data.append(data)
         status = mark_res.add_mark(inserted_data)
         ids = f'{data["student_id"]},{data["subject_id"]}'
         if status[0]:

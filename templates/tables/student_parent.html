@@ -22,9 +22,9 @@
 														<tr>
 															<th class="wd-15p">First Name</th>
 															<th class="wd-15p">Last Name</th>
-															<th class="wd-20p">Student ID</th>
+															<th class="wd-20p">Student Number</th>
 															<th class="wd-20p">Class Name</th>
-                                                            <th class="wd-10p">Teacher Id</th>
+                                                            <th class="wd-10p">Teacher Number</th>
 															<th class="wd-20p">Teacher Name</th>
 															<th class="wd-20p">Subject Name</th>
 														</tr>
@@ -47,6 +47,73 @@
 										</div>
 									</div>
 
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Calculate Student GPA</h2>	
+										</div>
+										<div class="card-body pb-0">
+											<form class="validate-form" action="/calculate_gpa" method="post" enctype="multipart/form-data">
+												<div class="form-group col-md-12">
+													<label class="form-label">Class</label>
+													<select name="class" id="select-class" class="form-control custom-select">
+														<option value="">Select Class</option>
+														{%for class in data['classes']:%}
+															<option value="{{class['id']}}">{{class['name']}}</option>
+														{%endfor%}
+													</select>
+												</div>
+												<div class="form-group col-md-12">
+													<label class="form-label">Student</label>
+													<select name="student" id="select-student" class="form-control custom-select">
+														<option value="">Select Student</option>
+														{%for student in data['student_parent']:%}
+															<option value="{{student['id']}}">{{student['first_name']}} {{student['last_name']}}</option>
+														{%endfor%}
+													</select>
+												</div>
+												<div class="form-group col-md-12">
+													<input type="submit" value="Calculate GPA" class="form-control btn btn-primary" />
+												</div>
+
+												<script>
+													document.addEventListener('DOMContentLoaded', function () {
+														const classSelect = document.getElementById('select-class');
+														const studentSelect = document.getElementById('select-student');
+												
+														classSelect.addEventListener('change', function () {
+															const selectedClassId = this.value;
+												
+															// Clear existing students
+															studentSelect.innerHTML = '<option value="">Select Student</option>';
+												
+															// Use a Set to keep track of unique student IDs
+															const addedStudentIds = new Set();
+												
+															// Filter and add unique students
+															{% for student in data['student_parent'] %}
+																if ('{{ student['class_id'] }}' === selectedClassId) {
+																	if (!addedStudentIds.has('{{ student['id'] }}')) {
+																		const option = document.createElement('option');
+																		option.value = '{{ student['id'] }}';
+																		option.textContent = '{{ student['first_name'] }} {{ student['last_name'] }}';
+																		studentSelect.appendChild(option);
+												
+																		// Add the student ID to the Set
+																		addedStudentIds.add('{{ student['id'] }}');
+																	}
+																}
+															{% endfor %}
+														});
+													});
+												</script>
+												
+											</form>
+										</div>
+									</div>
 								</div>
 							</div>
 {% include 'footer.html'%}

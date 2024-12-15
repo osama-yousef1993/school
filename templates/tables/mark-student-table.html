@@ -6,9 +6,9 @@
 									<li class="breadcrumb-item"><a href="#">Tables</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Student Marks</li>
 								</ol>
-								{%if data['User']['type'] != "parent":%}
+								{%if data['User']['type'] == "teacher":%}
                                 <a href="/mark-student-form/{{data['student']['id']}},{{data['subject']['id']}}" class="btn btn-primary  mb-0"><i class="fe fe-plus mr-2"></i>Add Student Mark</a>
-								{%else%}
+								{%elif data['User']['type'] == "parent"%}
 								<a href="/comments-form/{{data['User']['id']}},{{data['student']['teacher_id']}},{{data['subject']['id']}},{{data['student']['id']}}" class="btn btn-primary  mb-0"><i class="fe fe-plus mr-2"></i>Add a Comments</a>
 								{%endif%}
 							</div>
@@ -19,7 +19,7 @@
 											<h2 class="mb-0">Student Marks Table</h2>
 											<h5 class="mb-0">CLass Name: {{data['student']['class_name']}}</h5>
 											<h5 class="mb-0">Subject Name: {{data['subject']['name']}}</h5>
-											<h5 class="mb-0">Teacher ID: {{data['student']['teach_id']}}</h5>
+											<h5 class="mb-0">Teacher Number: {{data['student']['teach_id']}}</h5>
 											<h5 class="mb-0">Teacher Name: {{data['student']['teacher_name']}}</h5>
                                             <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
                                             <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
@@ -50,7 +50,7 @@
 																		<th class="wd-20p">Quiz</th>
 																		<th class="wd-10p">Mid Term</th>
 																		<th class="wd-20p">Final</th>
-																		<th class="wd-20p">Student Id</th>
+																		<th class="wd-20p">Student Number</th>
 																		<th class="wd-20p">Student Name</th>
 																	</tr>
 																</thead>
@@ -114,6 +114,7 @@
 
 								</div>
 							</div>
+							{%if data['User']['type'] == "teacher"%}
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card shadow">
@@ -125,10 +126,10 @@
 														</blockquote>
 														<p class="description">Teacher: {{comment['comments']}}</p>
 												{%else%}
-													<blockquote class="blockquote p-3 mb-0">
+													<blockquote class="blockquote text-right p-3 mb-0">
 														<h6 class="mb-0">{{comment['date_added']}}</h6>
 													</blockquote>
-													<p class="description text-right">Parent: {{comment['comments']}}</p>
+													<p class="description">Parent: {{comment['comments']}}</p>
 												{%endif%}
                                             {%endfor%}
                                         </div>
@@ -152,4 +153,5 @@
 									</div>
 								</div>
 							</div>
+							{%endif%}
 {% include 'footer.html'%}

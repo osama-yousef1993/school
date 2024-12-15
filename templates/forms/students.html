@@ -15,93 +15,51 @@
                                             <h4 class="form-title" style="color: green;">{{data ['Messages_Successfully']}} </h4>
                                             <h4 class="form-title" style="color: red;">{{data ['Messages_Error']}} </h4>	
 										</div>
-                                        <form class="validate-form" action="/add_student" method="post" enctype="multipart/form-data">
-                                            <div class="card-body">
-                                                <div class="nav-wrapper p-0">
-                                                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link mb-sm-3 mb-md-0 active show mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-home mr-2"></i>Select Class</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="far fa-images mr-2"></i>Select Subject</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-newspaper mr-2"></i>Select Teacher</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-user mr-2"></i>Add Student</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                        <div class="card-body">
+                                            <div class="nav-wrapper p-0">
+                                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 active show mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-8-tab" data-toggle="tab" href="#tabs-icons-text-8" role="tab" aria-controls="tabs-icons-text-8" aria-selected="true"><i class="fas fa-newspaper mr-2"></i>Add Student To Subject</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-9-tab" data-toggle="tab" href="#tabs-icons-text-9" role="tab" aria-controls="tabs-icons-text-9" aria-selected="false"><i class="far fa-newspaper mr-2"></i>Add New Student</a>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="card-body pb-0">
-                                                <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                        </div>
+                                        <div class="card-body pb-0">
+                                            <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="tabs-icons-text-8" role="tabpanel" aria-labelledby="tabs-icons-text-8-tab">
+                                                    <form class="validate-form" action="/add_student_subject" method="post" enctype="multipart/form-data">
                                                         <div class="form-group col-md-12">
                                                             <label class="form-label">CLass</label>
-                                                            <select name="class" id="select-class" class="form-control custom-select">
+                                                            <select name="class" id="select-class-student" class="form-control custom-select">
                                                                 <option value="">Select Class</option>
                                                                 {%for class in data['classes']:%}
                                                                     <option value="{{class['id']}}">{{class['name']}}</option>
                                                                 {%endfor%}
                                                             </select>
                                                         </div>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                                                         <div class="form-group col-md-12">
                                                             <label class="form-label">Subject</label>
-                                                            <select name="subject" id="select-subject" class="form-control custom-select">
+                                                            <select name="subject" id="select-subject-student" class="form-control custom-select">
                                                                 <option value="">Select Subject</option>
-                                                                {% for subject in data['subjects'] %}
-                                                                    <option value="{{ subject['id'] }}">{{ subject['name'] }}</option>
-                                                                {% endfor %}
                                                             </select>
                                                         </div>
-                                                    </div>
-                                                    <div aria-labelledby="tabs-icons-text-2-tab" class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label">Student First Name</label>
-                                                                        <input type="text" class="form-control" name="first_name" placeholder="First Name">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label">Student Last Name</label>
-                                                                        <input type="text" class="form-control" name="last_name" placeholder="Last Name">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label">Student ID</label>
-                                                                        <input type="text" class="form-control" name="student_id" placeholder="Student ID">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <input type="submit" value="Add Student" class="form-control btn btn-primary" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
                                                         <div class="form-group col-md-12">
-                                                            <label class="form-label">Teacher</label>
-                                                            <select name="teacher" id="select-teacher" class="form-control custom-select">
-                                                                <option value="">Select Teacher</option>
-                                                                {% for teacher in data['teachers'] %}
-                                                                    <option value="{{ teacher['id'] }}" data-subjects="">
-                                                                        {{ teacher['teacher_name'] }}
-                                                                    </option>
-                                                                {% endfor %}
+                                                            <label class="form-label">Student</label>
+                                                            <select name="student" id="select-student-student" class="form-control custom-select">
+                                                                <option value="">Select Student</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <input type="submit" value="Add Student To Subject" class="form-control btn btn-primary" />
                                                         </div>
                                                         <script>
                                                             document.addEventListener('DOMContentLoaded', function () {
-                                                                const classSelect = document.getElementById('select-class');
-                                                                const subjectSelect = document.getElementById('select-subject');
+                                                                const classSelect = document.getElementById('select-class-student');
+                                                                const subjectSelect = document.getElementById('select-subject-student');
+                                                                const studentSelect = document.getElementById('select-student-student');
                                                         
                                                                 classSelect.addEventListener('change', function () {
                                                                     const selectedClassId = this.value;
@@ -118,37 +76,163 @@
                                                                             subjectSelect.appendChild(option);
                                                                         }
                                                                     {% endfor %}
-                                                                });
-                                                            });
-                                                        </script>
-                                                        <script>
-                                                            document.addEventListener('DOMContentLoaded', function () {
-                                                                const subjectSelect = document.getElementById('select-subject');
-                                                                const teacherSelect = document.getElementById('select-teacher');
-                                                        
-                                                                subjectSelect.addEventListener('change', function () {
-                                                                    const selectedSubjectId = this.value.split(',')[1];
-                                                        
+
                                                                     // Clear existing subjects
-                                                                    teacherSelect.innerHTML = '<option value="">Select Teacher</option>';
+                                                                    studentSelect.innerHTML = '<option value="">Select Subject</option>';
                                                         
                                                                     // Filter and add subjects
-                                                                    {% for teacher in data['teachers'] %}
-                                                                        if ('{{ teacher['id'] }}' === selectedSubjectId) {
+                                                                    {% for student in data['students'] %}
+                                                                        if ('{{ student['class_id'] }}' === selectedClassId) {
                                                                             const option = document.createElement('option');
-                                                                            option.value = '{{ teacher['id'] }}';
-                                                                            option.textContent = '{{ teacher['teacher_name'] }}';
-                                                                            teacherSelect.appendChild(option);
+                                                                            option.value = '{{ student['id'] }}';
+                                                                            option.textContent = '{{student['first_name']}} {{student['last_name']}}';
+                                                                            studentSelect.appendChild(option);
                                                                         }
                                                                     {% endfor %}
                                                                 });
                                                             });
                                                         </script>
-                                                        
-                                                    </div>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane fade" id="tabs-icons-text-9" role="tabpanel" aria-labelledby="tabs-icons-text-9-tab">
+                                                    <form class="validate-form" action="/add_student" method="post" enctype="multipart/form-data">
+                                                        <div class="card-body">
+                                                            <div class="nav-wrapper p-0">
+                                                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link mb-sm-3 mb-md-0 active show mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-home mr-2"></i>Select Class</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="far fa-images mr-2"></i>Select Subject</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-newspaper mr-2"></i>Select Teacher</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link mb-sm-3 mb-md-0 mt-md-2 mt-0 mt-lg-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-user mr-2"></i>Add Student</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body pb-0">
+                                                            
+                                                            <div class="tab-content" id="myTabContent">
+                                                                <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label class="form-label">CLass</label>
+                                                                        <select name="class" id="select-class" class="form-control custom-select">
+                                                                            <option value="">Select Class</option>
+                                                                            {%for class in data['classes']:%}
+                                                                                <option value="{{class['id']}}">{{class['name']}}</option>
+                                                                            {%endfor%}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label class="form-label">Subject</label>
+                                                                        <select name="subject" id="select-subject" class="form-control custom-select">
+                                                                            <option value="">Select Subject</option>
+                                                                            {% for subject in data['subjects'] %}
+                                                                                <option value="{{ subject['id'] }}">{{ subject['name'] }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div aria-labelledby="tabs-icons-text-2-tab" class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">Student First Name</label>
+                                                                                    <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">Student Last Name</label>
+                                                                                    <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">Student ID</label>
+                                                                                    <input type="text" class="form-control" name="student_id" placeholder="Student ID">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-md-12">
+                                                                                <input type="submit" value="Add Student" class="form-control btn btn-primary" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label class="form-label">Teacher</label>
+                                                                        <select name="teacher" id="select-teacher" class="form-control custom-select">
+                                                                            <option value="">Select Teacher</option>
+                                                                            {% for teacher in data['teachers'] %}
+                                                                                <option value="{{ teacher['id'] }}" data-subjects="">
+                                                                                    {{ teacher['teacher_name'] }}
+                                                                                </option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            const classSelect = document.getElementById('select-class');
+                                                                            const subjectSelect = document.getElementById('select-subject');
+                                                                    
+                                                                            classSelect.addEventListener('change', function () {
+                                                                                const selectedClassId = this.value;
+                                                                    
+                                                                                // Clear existing subjects
+                                                                                subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+                                                                    
+                                                                                // Filter and add subjects
+                                                                                {% for subject in data['subjects'] %}
+                                                                                    if ('{{ subject['class_id'] }}' === selectedClassId) {
+                                                                                        const option = document.createElement('option');
+                                                                                        option.value = '{{ subject['id'] }},{{ subject['teach_id'] }}';
+                                                                                        option.textContent = '{{ subject['name'] }}';
+                                                                                        subjectSelect.appendChild(option);
+                                                                                    }
+                                                                                {% endfor %}
+                                                                            });
+                                                                        });
+                                                                    </script>
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            const subjectSelect = document.getElementById('select-subject');
+                                                                            const teacherSelect = document.getElementById('select-teacher');
+                                                                    
+                                                                            subjectSelect.addEventListener('change', function () {
+                                                                                const selectedSubjectId = this.value.split(',')[1];
+                                                                    
+                                                                                // Clear existing subjects
+                                                                                teacherSelect.innerHTML = '<option value="">Select Teacher</option>';
+                                                                    
+                                                                                // Filter and add subjects
+                                                                                {% for teacher in data['teachers'] %}
+                                                                                    if ('{{ teacher['id'] }}' === selectedSubjectId) {
+                                                                                        const option = document.createElement('option');
+                                                                                        option.value = '{{ teacher['id'] }}';
+                                                                                        option.textContent = '{{ teacher['teacher_name'] }}';
+                                                                                        teacherSelect.appendChild(option);
+                                                                                    }
+                                                                                {% endfor %}
+                                                                            });
+                                                                        });
+                                                                    </script>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
 									</div>
 								</div>
 							</div>

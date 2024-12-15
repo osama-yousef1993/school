@@ -10,7 +10,7 @@ class DataBase:
         username=USERNAME,
         password=PASSWORD,
         database=DATABASE,
-        port=int(DB_PORT),
+        port=DB_PORT,
     ):
         try:
             # Initial connection to check databases

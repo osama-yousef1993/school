@@ -5,11 +5,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-DEBUG = True
-PORT = 5000
-HOST_DB = os.getenv("HOST_DB", "autorack.proxy.rlwy.net")
-DB_PORT = os.getenv("DB_PORT", "52650")
+DEBUG = bool(os.getenv("DEBUG"))
+PORT = int(os.getenv("PORT"))
+HOST_DB = os.getenv("HOST_DB")
+DB_PORT = int(os.getenv("DB_PORT"))
 HOST_APP = os.getenv("HOST_APP")
-USERNAME = os.getenv("USERNAME", "root")
-PASSWORD = os.getenv("PASSWORD", "LqEfixuPehYcVjFAILrIUylPMyAWZGUm")
-DATABASE = os.getenv("DATABASE", "railway")
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
+DATABASE = os.getenv("DATABASE")

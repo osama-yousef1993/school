@@ -67,7 +67,6 @@ CREATE TABLE `Marks` (
   `final` float,
   `student_id` varchar(36),
   `teacher_id` varchar(36),
-  `terms_id` varchar(36),
   `class_id` varchar(36),
   `subject_id` varchar(36),
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -91,9 +90,11 @@ CREATE TABLE `student_subjects` (
   `id` varchar(36) PRIMARY KEY,
   `student_id` varchar(36),
   `subject_id` varchar(36),
+  `class_id` varchar(36),
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_at` timestamp
 );
+
 CREATE TABLE `term_marks` (
   `id` varchar(36) PRIMARY KEY,
   `term_id` varchar(36),
@@ -170,38 +171,92 @@ CREATE INDEX `Comments_index_32` ON `Comments` (`teacher_id`);
 
 CREATE INDEX `Comments_index_33` ON `Comments` (`student_id`);
 
-ALTER TABLE `Student` ADD FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
+ALTER TABLE
+  `Student`
+ADD
+  FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
 
-ALTER TABLE `Student` ADD FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
+ALTER TABLE
+  `Student`
+ADD
+  FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
 
-ALTER TABLE `Student` ADD FOREIGN KEY (`parent_id`) REFERENCES `User` (`id`);
+ALTER TABLE
+  `Student`
+ADD
+  FOREIGN KEY (`parent_id`) REFERENCES `User` (`id`);
 
-ALTER TABLE `Subject` ADD FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
+ALTER TABLE
+  `Subject`
+ADD
+  FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
 
-ALTER TABLE `Subject` ADD FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
+ALTER TABLE
+  `Subject`
+ADD
+  FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
 
-ALTER TABLE `Marks` ADD FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
+ALTER TABLE
+  `Marks`
+ADD
+  FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
 
-ALTER TABLE `Marks` ADD FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
+ALTER TABLE
+  `Marks`
+ADD
+  FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
 
-ALTER TABLE `Marks` ADD FOREIGN KEY (`terms_id`) REFERENCES `Terms` (`id`);
+ALTER TABLE
+  `Marks`
+ADD
+  FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
 
-ALTER TABLE `Marks` ADD FOREIGN KEY (`class_id`) REFERENCES `Class` (`id`);
+ALTER TABLE
+  `Marks`
+ADD
+  FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
 
-ALTER TABLE `Marks` ADD FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
+ALTER TABLE
+  `Comments`
+ADD
+  FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
 
-ALTER TABLE `Comments` ADD FOREIGN KEY (`teacher_id`) REFERENCES `Teacher` (`id`);
+ALTER TABLE
+  `Comments`
+ADD
+  FOREIGN KEY (`parent_id`) REFERENCES `User` (`id`);
 
-ALTER TABLE `Comments` ADD FOREIGN KEY (`parent_id`) REFERENCES `User` (`id`);
+ALTER TABLE
+  `Comments`
+ADD
+  FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
 
-ALTER TABLE `Comments` ADD FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
+ALTER TABLE
+  `Comments`
+ADD
+  FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
 
-ALTER TABLE `Comments` ADD FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
+ALTER TABLE
+  `student_subjects`
+ADD
+  FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
 
-ALTER TABLE `student_subjects` ADD FOREIGN KEY (`student_id`) REFERENCES `Student` (`id`);
+ALTER TABLE
+  `student_subjects`
+ADD
+  FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
 
-ALTER TABLE `student_subjects` ADD FOREIGN KEY (`subject_id`) REFERENCES `Subject` (`id`);
+ALTER TABLE
+  `student_subjects`
+ADD
+  FOREIGN KEY (`class_id`) REFERENCES `CLass` (`id`);
 
-ALTER TABLE `term_marks` ADD FOREIGN KEY (`term_id`) REFERENCES `Terms` (`id`);
+ALTER TABLE
+  `term_marks`
+ADD
+  FOREIGN KEY (`term_id`) REFERENCES `Terms` (`id`);
 
-ALTER TABLE `term_marks` ADD FOREIGN KEY (`mark_id`) REFERENCES `Marks` (`id`);
+ALTER TABLE
+  `term_marks`
+ADD
+  FOREIGN KEY (`mark_id`) REFERENCES `Marks` (`id`);

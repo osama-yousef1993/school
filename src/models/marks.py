@@ -186,14 +186,14 @@ class MarksModel:
     def add_mark(self, **info) -> bool:
         try:
             mark_term_id = info["mark_term_id"]
+            terms_id = info["terms_id"]
+            del info["terms_id"]
             del info["mark_term_id"]
             self.con.upsert_data("marks", **info)
-            if mark_term_id == "" and not self.check_mark_terms_exists(
-                "mark_term_id", mark_term_id
-            ):
+            if mark_term_id == "":
                 data = dict()
                 data["id"] = str(uuid4())
-                data["term_id"] = info["terms_id"]
+                data["term_id"] = terms_id
                 data["mark_id"] = info["id"]
                 self.con.insert_data("term_marks", **data)
             return True, "Data Inserted Successfully!"
