@@ -9,7 +9,7 @@ class ClassModel:
         sql = """SELECT
                     id,
                     name
-                from class"""
+                from Class"""
 
         students = self.con.select_all(sql)
         result = list()
@@ -43,7 +43,7 @@ class ClassModel:
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
@@ -76,7 +76,7 @@ class ClassModel:
                         id,
                         name AS class_name,
                         teacher_id
-                    FROM class
+                    FROM Class
                     where id = '{id}') c
                 LEFT JOIN
                     (SELECT
@@ -96,7 +96,7 @@ class ClassModel:
         return data
 
     def check_class_exists(self, column: str, value) -> bool:
-        sql = """SELECT count(*) FROM class WHERE {} ='{}' ;""".format(column, value)
+        sql = """SELECT count(*) FROM Class WHERE {} ='{}' ;""".format(column, value)
         data = self.con.select_one(sql)
         if data[0] == 0:
             return False

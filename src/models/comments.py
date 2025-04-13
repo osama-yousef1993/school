@@ -83,9 +83,6 @@ class CommentsModel:
 
     def add_comments(self, **info) -> bool:
         try:
-            # if self.check_subject_exists("name", info["name"]):
-            #     return False, "Subject already exists Please enter a new Subject"
-
             self.con.insert_data("comments", **info)
             return True, "Data Inserted Successfully!"
 

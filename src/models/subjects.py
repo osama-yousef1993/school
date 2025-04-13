@@ -26,7 +26,7 @@ class SubjectModel:
                     (SELECT
                         id as class_id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.class_id
                 LEFT JOIN
                     (SELECT
@@ -71,7 +71,7 @@ class SubjectModel:
                     (SELECT
                         id as class_id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.class_id
                 LEFT JOIN
                     (SELECT
@@ -115,7 +115,7 @@ class SubjectModel:
                     (SELECT
                         id as class_id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.class_id
                 LEFT JOIN
                     (SELECT
@@ -159,7 +159,7 @@ class SubjectModel:
                     (SELECT
                         id as class_id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.class_id
                 LEFT JOIN
                     (SELECT
@@ -180,7 +180,7 @@ class SubjectModel:
         return data
 
     def check_subject_exists(self, column: str, value) -> bool:
-        sql = """SELECT count(*) FROM subject WHERE {} ='{}' ;""".format(column, value)
+        sql = """SELECT count(*) FROM Subject WHERE {} ='{}' ;""".format(column, value)
         data = self.con.select_one(sql)
         if data[0] == 0:
             return False
@@ -189,8 +189,6 @@ class SubjectModel:
 
     def add_subject(self, **info) -> bool:
         try:
-            # if self.check_subject_exists("name", info["name"]):
-            #     return False, "Subject already exists Please enter a new Subject"
 
             self.con.insert_data("subject", **info)
             return True, "Data Inserted Successfully!"

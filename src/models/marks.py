@@ -31,13 +31,13 @@ class MarksModel:
                         final,
                         teacher_id,
                         student_id
-                    FROM marks) s
+                    FROM Marks) s
                 LEFT JOIN
                     (SELECT
                         id,
                         concat(first_name, ' ', last_name) AS name,
                         student_id
-                    FROM student) c
+                    FROM Student) c
                 ON s.student_id = c.id
                 LEFT JOIN
                     (SELECT
@@ -98,7 +98,7 @@ class MarksModel:
                         student_id,
                         subject_id,
                         class_id
-                    FROM marks
+                    FROM Marks
                     WHERE student_id = '{student_id}'
                     AND subject_id ='{subject_id}') s
                 LEFT JOIN
@@ -106,26 +106,26 @@ class MarksModel:
                         id,
                         concat(first_name, ' ', last_name) AS student_name,
                         student_id
-                    FROM student) c
+                    FROM Student) c
                 ON s.student_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher) u
+                    FROM Teacher) u
                 ON s.teacher_id = u.id
                 LEFT JOIN
                     (SELECT
                         id,
                         name AS subject_name
-                    FROM subject) su
+                    FROM Subject) su
                 ON s.subject_id = su.id
                 LEFT JOIN
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) cl
+                    FROM Class) cl
                 ON s.class_id = cl.id
                 LEFT JOIN
                     term_marks mt
@@ -134,7 +134,7 @@ class MarksModel:
                     (SELECT
                         id as term_id,
                         name as term_name
-                    FROM terms) t
+                    FROM Terms) t
                 ON mt.term_id = t.term_id
                 ;"""
 
@@ -166,7 +166,7 @@ class MarksModel:
         return result
 
     def check_mark_exists(self, column: str, value) -> bool:
-        sql = """SELECT count(*) FROM marks WHERE {} ='{}' ;""".format(column, value)
+        sql = """SELECT count(*) FROM Marks WHERE {} ='{}' ;""".format(column, value)
         data = self.con.select_one(sql)
         if data[0] == 0:
             return False

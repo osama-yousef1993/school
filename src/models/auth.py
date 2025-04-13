@@ -28,7 +28,7 @@ class Register_And_login:
         return pwdhash == stored_password
 
     def check_user_exists(self, column, value):
-        sql = """SELECT count(*) FROM user WHERE {} ='{}' ;""".format(column, value)
+        sql = """SELECT count(*) FROM User WHERE {} ='{}' ;""".format(column, value)
         data = self.con.select_one(sql)
         print(data)
         if data[0] == 0:
@@ -66,7 +66,7 @@ class Register_And_login:
             info["password"] = self.hash_password(info["password"])
 
             self.con.insert_data("user", **info)
-            sql = "SELECT id FROM user WHERE email='{}' ; ".format(info["email"])
+            sql = "SELECT id FROM User WHERE email='{}' ; ".format(info["email"])
             Id_User = self.con.select_one(sql)
             return True, Id_User, "Data Inserted Successfully!"
         except:  # noqa: E722
@@ -77,7 +77,7 @@ class Register_And_login:
         This function makes sure that the logon information is correct
         """
         try:
-            sql = "SELECT id ,email , password, type  FROM user WHERE email='{}'  ;".format(
+            sql = "SELECT id ,email , password, type  FROM User WHERE email='{}'  ;".format(
                 info["email"].lower()
             )
             data = self.con.select_one(sql)
@@ -99,7 +99,7 @@ class Register_And_login:
         This function makes sure that the logon information is correct
         """
         try:
-            sql = "SELECT id ,email , password, type  FROM teacher WHERE email='{}'  ;".format(
+            sql = "SELECT id ,email , password, type  FROM Teacher WHERE email='{}'  ;".format(
                 info["email"].lower()
             )
             data = self.con.select_one(sql)
@@ -117,7 +117,7 @@ class Register_And_login:
             return False, "Please enter a valid password"
 
     def get_info_user_by_Id(self, Id_User: int):
-        sql = f"""select id, first_name, last_name, email, type from user where id = '{Id_User}'  ; """
+        sql = f"""select id, first_name, last_name, email, type from User where id = '{Id_User}'  ; """
 
         User_info = self.con.select_one(sql)
         if User_info:
@@ -127,10 +127,11 @@ class Register_And_login:
             data["last_name"] = User_info[2]
             data["email"] = User_info[3]
             data["type"] = User_info[4]
+            print(data)
             return data
 
         else:
-            sql = f"""select id, first_name, last_name, email, type from teacher where id = '{Id_User}'  ; """
+            sql = f"""select id, first_name, last_name, email, type FROM Teacher where id = '{Id_User}'  ; """
 
             User_info = self.con.select_one(sql)
             if User_info:
@@ -146,12 +147,12 @@ class Register_And_login:
         sql = f"""SELECT id , class_id, name , tea_id, teacher_name
                 FROM (
                     select id , concat(first_name, ' ',last_name) as teacher_name, teacher_id
-                    from user
+                    from User
                 ) u
                 left join
                 (
                     select id as class_id, name , teacher_id as tea_id
-                    from class
+                    from Class
                 ) c
                 on u.teacher_id = c.tea_id
                 where u.id = {id} """
@@ -170,7 +171,7 @@ class Register_And_login:
 
     def get_all_teachers(self):
         sql = """ select id , teacher_id, concat(first_name, ' ',last_name) as teacher_name
-                    from user
+                    from User
                     where type = 'teacher' """
 
         teacher_classes = self.con.select_all(sql)
@@ -185,7 +186,7 @@ class Register_And_login:
 
     def get_all_parents(self):
         sql = """ select id , concat(first_name, ' ',last_name) as parent_name
-                    from user
+                    from User
                     where type = 'parent' """
 
         parents = self.con.select_all(sql)

@@ -7,6 +7,9 @@ class Users:
         self.data["title"] = "My Account"
         self.register_user = Register_And_login()
 
+    def get_info_user_by_Id(self, Id_User):
+        self.data["User"] = self.register_user.get_info_user_by_Id(Id_User)
+
     def login(self, **info):
         result = tuple()
         result = self.register_user.Login_func(**info)
@@ -16,9 +19,6 @@ class Users:
 
     def Add_User(self, **info):
         return self.register_user.Register_func(**info)
-
-    def get_info_user_by_Id(self, Id_User):
-        self.data["User"] = self.register_user.get_info_user_by_Id(Id_User)
 
     def get_teacher_classes(self, id):
         self.data["classes"] = self.register_user.get_teacher_classes(id)

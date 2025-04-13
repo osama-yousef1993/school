@@ -9,7 +9,7 @@ class TermsModel:
         sql = """SELECT
                     id,
                     name
-                    from terms order by name asc;"""
+                    from Terms order by name asc;"""
 
         students = self.con.select_all(sql)
         result = list()

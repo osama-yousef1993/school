@@ -30,14 +30,14 @@ class StudentModel:
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher) u
+                    FROM Teacher) u
                 ON s.teacher_id = u.id; """
 
         students = self.con.select_all(sql)
@@ -79,13 +79,13 @@ class StudentModel:
                         id,
                         name AS class_name,
                         teacher_id
-                    FROM class where id = '{id}') c
+                    FROM Class where id = '{id}') c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name
-                    FROM teacher) u
+                    FROM Teacher) u
                 ON c.teacher_id = u.id; """
 
         students = self.con.select_all(sql)
@@ -117,6 +117,18 @@ class StudentModel:
                     su.subject_id,
                     su.subject_name
                 FROM
+                    (
+                        SELECT
+                        id,
+                        subject_id,
+                        student_id,
+                        class_id
+                    FROM
+                        student_subjects
+                    where
+                        subject_id = '{id}'
+                    ) ss
+                    LEFT JOIN
                     (SELECT
                         id,
                         first_name,
@@ -126,28 +138,29 @@ class StudentModel:
                         class_id,
                         subject_id
                     FROM Student
-                    WHERE subject_id = '{id}') s
+                    ) s
+                    ON s.id = ss.student_id
+                    LEFT JOIN
+                (SELECT
+                    id as subject_id,
+                    name as subject_name
+                FROM Subject
+               ) su
+                ON su.subject_id = ss.subject_id
                 LEFT JOIN
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher) t
+                    FROM Teacher) t
                 ON s.teacher_id = t.id
-                LEFT JOIN
-                (SELECT
-                    id as subject_id,
-                    name as subject_name,
-                    class_id
-                FROM subject
-                WHERE id = '{id}') su
-                ON su.class_id = s.class_id"""
+                """
 
         students = self.con.select_all(sql)
         result = list()
@@ -200,7 +213,7 @@ class StudentModel:
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class
+                    FROM Class
                     where id = '{class_id}') c
                 ON s.class_id = c.id
                 LEFT JOIN
@@ -208,7 +221,7 @@ class StudentModel:
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher
+                    FROM Teacher
                     where id = '{teacher_id}') t
                 ON s.teacher_id = t.id
                 LEFT JOIN
@@ -216,7 +229,7 @@ class StudentModel:
                     id as subject_id,
                     name as subject_name,
                     class_id
-                FROM subject
+                FROM Subject
                 where id = '{subject_id}') su
                 ON su.class_id = s.class_id"""
 
@@ -263,14 +276,14 @@ class StudentModel:
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher) u
+                    FROM Teacher) u
                 ON s.teacher_id = u.id; """
 
         student = self.con.select_one(sql)
@@ -309,18 +322,19 @@ class StudentModel:
 
     def add_student(self, **info) -> bool:
         try:
+            if self.check_Student_exists("student_id", info["student_id"]):
+                return False, "Student already exists Please enter a new Student Id"
+
+            self.con.insert_data("student", **info)
             data = dict()
             data["id"] = str(uuid4())
             data["student_id"] = info["id"]
             data["subject_id"] = info["subject_id"]
             self.con.insert_data("student_subjects", **data)
-            if self.check_Student_exists("student_id", info["student_id"]):
-                return False, "Student already exists Please enter a new Student Id"
-
-            self.con.insert_data("student", **info)
             return True, "Data Inserted Successfully!"
 
-        except:  # noqa: E722
+        except Exception as e:  # noqa: E722
+            print(e)
             return False, "A system error occurred, please try again later"
 
     def add_student_to_subject(self, **info) -> bool:
@@ -392,21 +406,21 @@ class StudentModel:
                     (SELECT
                         id,
                         name AS class_name
-                    FROM class) c
+                    FROM Class) c
                 ON s.class_id = c.id
                 LEFT JOIN
                     (SELECT
                         id,
                         CONCAT(first_name, ' ', last_name) AS teacher_name,
                         teacher_id
-                    FROM teacher) t
+                    FROM Teacher) t
                 ON s.teacher_id = t.id
                 LEFT JOIN
                 (SELECT
                     id as subject_id,
                     name as subject_name,
                     class_id
-                FROM subject) su
+                FROM Subject) su
                 ON su.class_id = s.class_id
 
                 LEFT JOIN
@@ -462,7 +476,7 @@ class StudentModel:
                         student_id,
                         subject_id,
                         class_id
-                    FROM marks
+                    FROM Marks
                     WHERE student_id = '{student_id}'
                     AND class_id ='{class_id}') s
                 LEFT JOIN
@@ -476,7 +490,7 @@ class StudentModel:
                     (SELECT distinct
                         id as term_id,
                         name as term_name
-                    FROM terms) t
+                    FROM Terms) t
                 ON mt.term_id = t.term_id
                 ;"""
 

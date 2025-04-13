@@ -28,7 +28,7 @@ class TeacherModel:
         return pwdhash == stored_password
 
     def check_teacher_exists(self, column, value):
-        sql = """SELECT count(*) FROM teacher WHERE {} ='{}' ;""".format(column, value)
+        sql = """SELECT count(*) FROM Teacher WHERE {} ='{}' ;""".format(column, value)
         data = self.con.select_one(sql)
         print(data)
         if data[0] == 0:
@@ -69,7 +69,7 @@ class TeacherModel:
             info["password"] = self.hash_password(info["password"])
 
             self.con.insert_data("teacher", **info)
-            # sql = "SELECT id FROM teacher WHERE email='{}' ; ".format(info["email"])
+            # sql = "SELECT id FROM Teacher WHERE email='{}' ; ".format(info["email"])
             # Id_User = self.con.select_one(sql)
             return True, "Data Inserted Successfully!"
         except:  # noqa: E722
@@ -110,7 +110,7 @@ class TeacherModel:
         return data
 
     def get_teacher(self, Id_User: int):
-        sql = f"""select id, first_name, last_name, email, type from teacher where id = '{Id_User}'  ; """
+        sql = f"""select id, first_name, last_name, email, type FROM Teacher where id = '{Id_User}'  ; """
 
         User_info = self.con.select_one(sql)
         data = dict()
@@ -130,7 +130,7 @@ class TeacherModel:
                 left join
                 (
                     select id as class_id, name , teacher_id as tea_id
-                    from class
+                    from Class
                 ) c
                 on u.teacher_id = c.tea_id
                 where u.id = {id} """
@@ -149,7 +149,7 @@ class TeacherModel:
 
     def get_all_teachers(self):
         sql = """ select id , teacher_id, concat(first_name, ' ',last_name) as teacher_name
-                    from teacher """
+                    FROM Teacher """
 
         teacher_classes = self.con.select_all(sql)
         result = list()

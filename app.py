@@ -563,7 +563,7 @@ def add_mark():
             ):
                 inserted_data.append(data)
         status = mark_res.add_mark(inserted_data)
-        ids = f'{data["student_id"]},{data["subject_id"]}'
+        ids = f"{data['student_id']},{data['subject_id']}"
         if status[0]:
             session["successfully_add_mark"] = status[1]
             return redirect(url_for("mark_student_table_page", ids=ids))
@@ -653,16 +653,6 @@ def login():
 
 
 # done
-@app.route("/logout")
-def Logout_Page():
-    if "Id_User" in session:
-        del session["Id_User"]
-        return redirect(url_for("login"))
-    else:
-        return redirect(url_for("login"))
-
-
-# done
 @app.route("/login_check", methods=["POST"])
 def check_Login_Page():
     data = dict()
@@ -679,6 +669,16 @@ def check_Login_Page():
         elif not status[0]:
             session["Login_Error"] = status[1]
             return redirect(url_for("login"))
+    else:
+        return redirect(url_for("login"))
+
+
+# done
+@app.route("/logout")
+def Logout_Page():
+    if "Id_User" in session:
+        del session["Id_User"]
+        return redirect(url_for("login"))
     else:
         return redirect(url_for("login"))
 
@@ -897,14 +897,7 @@ def add_comments():
         elif page_name == "parent_mark":
             data["from_who"] = "parent"
         status = comments_res.add_comments(**data)
-        ids = ",".join(
-            [
-                data["parent_id"],
-                data["teacher_id"],
-                data["subject_id"],
-                data["student_id"],
-            ]
-        )
+        ids = ",".join([data["parent_id"], data["teacher_id"], data["subject_id"], data["student_id"],])
         if status[0]:
             if page_name != "student_mark":
                 session["successfully_add_parent"] = status[1]
